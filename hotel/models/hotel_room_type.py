@@ -10,16 +10,16 @@ class HotelRoomType(models.Model):
         ('deluxe', 'Deluxe')
     ], required=True)
 
-    quality_type_surtax = fields.Float(string='Quality Type Surtax', compute='_compute_quality_type_surtax', store=True)
+    surtax_percentage = fields.Float(string='Quality Type Surtax', compute='_compute_surtax_percentage', store=True)
 
     @api.depends('name')
-    def _compute_quality_type_surtax(self):
+    def _compute_surtax_percentage(self):
         for record in self:
             if record.name == 'standard':
-                record.quality_type_surtax = 0.0
+                record.surtax_percentage = 0.0
             elif record.name == 'executive':
-                record.quality_type_surtax = 0.2
+                record.surtax_percentage = 0.2
             elif record.name == 'deluxe':
-                record.quality_type_surtax = 0.3
+                record.surtax_percentage = 0.3
             else:
-                record.quality_type_surtax = 0.0
+                record.surtax_percentage = 0.0
